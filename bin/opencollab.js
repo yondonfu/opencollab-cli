@@ -140,15 +140,23 @@ function mangoStatus(mangoAddress, account) {
 
   return mangoRepoLib.refs()
     .then(refs => {
-      refs.map(ref => {
-        console.log('Reference: ' + ref.name + ' -> ' + ref.ref);
-      });
+      if (refs.length === 0) {
+        console.log('No references');
+      } else {
+        refs.map(ref => {
+          console.log('Reference: ' + ref.name + ' -> ' + ref.ref);
+        });
+      }
     })
     .then(() => mangoRepoLib.snapshots())
     .then(snapshots => {
-      snapshots.map((snapshot, i) => {
-        console.log('Snapshot #' + i + ' -> ' + snapshot);
-      });
+      if (snapshots.length === 0) {
+        console.log('No snapshots');
+      } else {
+        snapshots.map((snapshot, i) => {
+          console.log('Snapshot #' + i + ' -> ' + snapshot);
+        });
+      }
     });
 }
 
@@ -158,11 +166,18 @@ function mangoIssues(mangoAddress, account) {
   const mangoRepoLib = initLib(host, port, mangoAddress, account);
 
   return mangoRepoLib.issues().then(issues => {
+    let noIssues = true;
+
     issues.map((issue, id) => {
       if (issue) {
+        noIssues = false;
         console.log('Issue #' + id + ' -> ' + issue);
       }
     });
+
+    if (noIssues) {
+      console.log('No issues');
+    }
   });
 }
 
@@ -239,13 +254,6 @@ function mangoFork() {
       console.error(err);
     } else {
       console.log('Mango repository forked to ' + path);
-
-      shell.cd(path);
-
-      if (shell.exec('git remote rm origin').code !== 0) {
-        shell.echo('Error: Git remote rm failed');
-        shell.exit(1);
-      }
     }
   });
 }
@@ -300,11 +308,18 @@ function mangoPullRequests(mangoAddress, account) {
 
   return mangoRepoLib.pullRequests()
     .then(pullRequests => {
+      let noPullRequests = true;
+
       pullRequests.map((pullRequest, i) => {
         if (pullRequest != '0x0000000000000000000000000000000000000000') {
+          noPullRequests = false;
           console.log('Pull Request #' + i + ' -> ' + pullRequest);
         }
       });
+
+      if (noPullRequests) {
+        console.log('No pull requests');
+      }
     });
 }
 

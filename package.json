@@ -1,6 +1,6 @@
 {
   "name": "opencollab",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "description": "CLI for OpenCollab",
   "bin": "public/bin/opencollab.js",
   "scripts": {
@@ -19,7 +19,6 @@
     "git"
   ],
   "author": "Yondon Fu <yondon.fu@gmail.com>",
-  "license": "GPL-3.0",
   "bugs": {
     "url": "https://github.com/yondonfu/opencollab/issues"
   },

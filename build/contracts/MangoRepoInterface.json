@@ -1,0 +1,157 @@
+{
+  "contract_name": "MangoRepoInterface",
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "snapshotCount",
+      "outputs": [
+        {
+          "name": "count",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "ref",
+          "type": "string"
+        }
+      ],
+      "name": "deleteRef",
+      "outputs": [],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "index",
+          "type": "uint256"
+        }
+      ],
+      "name": "getSnapshot",
+      "outputs": [
+        {
+          "name": "hash",
+          "type": "string"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "refCount",
+      "outputs": [
+        {
+          "name": "count",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "isObsolete",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "ref",
+          "type": "string"
+        },
+        {
+          "name": "hash",
+          "type": "string"
+        }
+      ],
+      "name": "setRef",
+      "outputs": [],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "index",
+          "type": "uint256"
+        }
+      ],
+      "name": "refName",
+      "outputs": [
+        {
+          "name": "ref",
+          "type": "string"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "ref",
+          "type": "string"
+        }
+      ],
+      "name": "getRef",
+      "outputs": [
+        {
+          "name": "hash",
+          "type": "string"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "repoInterfaceVersion",
+      "outputs": [
+        {
+          "name": "version",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "hash",
+          "type": "string"
+        }
+      ],
+      "name": "addSnapshot",
+      "outputs": [],
+      "payable": false,
+      "type": "function"
+    }
+  ],
+  "networks": {},
+  "schema_version": "0.0.5",
+  "updated_at": 1492548511541
+}

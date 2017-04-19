@@ -8,9 +8,23 @@ This is a WIP.
 
 # Install
 
-`npm install -g opencollab git-remote-mango`
+`opencollab` can be used with [TestRPC](https://github.com/ethereumjs/testrpc), a Node.js based Ethereum client for testing and development. It has not been tested or used with any other Ethereum client at the moment.
+
+`npm install -g opencollab ethereumjs-testrpc`
+
+Pushing a local Mango repository requires the `git-remote-mango` remote helper package. The original package is missing gas for certain state changing transactions associated with the Ethereum contract, but a fork of the package that includes gas for these transactions can be used instead.
+
+```
+git clone https://github.com/yondonfu/git-remote-mango
+cd git-remote-mango
+npm install -g .
+```
 
 # Usage
+
+Make sure TestRPC is running. Gas usage has not been addressed so it is likely necessary to run TestRPC with a high gas limit.
+
+`testrpc -l 1000000000`
 
 Users can use `opencollab` with `git`.
 

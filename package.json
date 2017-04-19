@@ -1,6 +1,6 @@
 {
   "name": "opencollab",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "CLI for OpenCollab",
   "bin": "public/bin/opencollab.js",
   "scripts": {

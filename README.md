@@ -1,6 +1,6 @@
 # OpenCollab
 
-`opencollab` is a CLI tool built off a fork of [mango-admin](https://github.com/axic/mango-admin) that uses an extension of the [Mango](https://github.com/axic/mango) protocol to integrate issue tracking and pull requests into a remote protocol for Git that uses Ethereum smart contracts for repository access control and IPFS/Swarm for storage of git objects.
+`opencollab` is a CLI tool built off a fork of [mango-admin](https://github.com/axic/mango-admin). It uses an extension of the [Mango](https://github.com/axic/mango) protocol to integrate issue tracking and pull requests into a remote protocol for Git that uses Ethereum smart contracts for repository access control and IPFS/Swarm for storage of git objects.
 
 Issue tracking and pull requests are key components of a decentralized Github.
 

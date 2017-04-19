@@ -75,7 +75,8 @@ $ git push mango master
 
 `opencollab init`
 
-Initializes a Mango repository in the current directory. Current directory must already have a Git repository.
+Initializes a Mango repository in the current directory. Current directory must already have a Git repository. An
+Ethereum smart contract is created and the contract address is written to `.mango/contract`.
 
 ### Example:
 
@@ -112,13 +113,14 @@ $ opencollab issues
 Issue #0 -> d7b1d896682b66d8a7b8e0233feefdece0a2b285ec6aa0705817115e87c9c803
 ```
 
-Shows the currently open issues for the Mango repository.
+Shows the currently open issues for the Mango repository. Issue ids are mapped to the Swarm hash of the issue.
 
 ## opencollab get-issue
 
 `opencollab issues get-issue <id>`
 
-Shows the issue content for a given issue id.
+Shows the issue content for a given issue id. The id is used to grab the Swarm hash from the smart contract and the hash is used to download
+the actual issue content from Swarm.
 
 ### Example:
 
@@ -159,7 +161,8 @@ $ opencollab edit-issue 1
 
 `opencollab delete-issue <id>`
 
-Deletes the issue for the Mango repository.
+Deletes the issue for the Mango repository. Note that the issue id and its corresponding mapping to a Swarm hash are
+deleted from the smart contract, but the issue content remains in Swarm.
 
 ### Example:
 
@@ -172,7 +175,8 @@ $ opencollab delete-issue 1
 
 `opencollab fork <path>`
 
-Forks the current Mango repository by recursively copying the current directory into the directory specified by the path.
+Forks the current Mango repository by recursively copying the current directory into the directory specified by the path. `.mango` is not copied
+because the forked directory needs to initialize a new Mango repository.
 
 ### Example:
 
@@ -206,7 +210,7 @@ Fork merged into Mango repository.
 
 `opencollab pull-requests`
 
-Shows the open pull requests for the Mango repository.
+Shows the open pull requests for the Mango repository. Pull request ids are mapped to the contract address of the fork referenced by the pull request.
 
 ### Example:
 
@@ -245,7 +249,8 @@ $ opencollab open-pull-request 0 0xdee912e023f7604eef0827f380e7e39c0456d639
 
 `opencollab close-pull-request <id>`
 
-Closes a pull request for the Mango repository.
+Closes a pull request for the Mango repository. Note that the pull request id and its corresponding mapping to the contract address
+of a fork are deleted from the smart contract, but the actual contract associated with the fork remains. One option is to mark the contract associated with the fork obsolete.
 
 ### Example:
 

@@ -48,6 +48,7 @@ const args = yargs
       .command('get-pull-request <id>', 'Get a pull request referencing a fork')
       .command('open-pull-request <issueId> <forkAddress>', 'Open a pull request referencing a fork')
       .command('close-pull-request <id>', 'Close a pull request referencing a fork')
+      .string('_')
       .help()
       .usage('Usage: $0 [command]');
 
@@ -79,7 +80,7 @@ function getMangoAddress() {
 
 function ensureMangoRepo() {
   return ensureGitRepo()
-    .then(getMangoAddress());
+    .then(() => getMangoAddress());
 }
 
 function setMango(address) {

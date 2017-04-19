@@ -5,7 +5,8 @@
   "bin": "public/bin/opencollab.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "mkdir -p public && babel . --out-dir public --ignore node_modules",
+    "build": "mkdir -p public && cp -r build public/build && babel . --out-dir public --ignore node_modules",
+    "prepublish": "npm run build",
     "opencollab": "babel-node ./bin/opencollab.js"
   },
   "repository": {

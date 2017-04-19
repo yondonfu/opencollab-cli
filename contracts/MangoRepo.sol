@@ -45,8 +45,13 @@ contract MangoRepo {
     _;
   }
 
-  modifier creatorOnly(uint id) {
-    if (issues[id].creator != msg.sender) throw;
+  modifier issuePermissions(uint id) {
+    if (issues[id].creator != msg.sender && !maintainers[msg.sender]) throw;
+    _;
+  }
+
+  modifier pullRequestPermissions(uint id) {
+    if (pullRequests[id].creator != msg.sender && !maintainers[msg.sender]) throw;
     _;
   }
 
@@ -76,14 +81,14 @@ contract MangoRepo {
     return -1;
   }
 
-  function setRef(string ref, string hash) {
+  function setRef(string ref, string hash) maintainerOnly {
     if (__findRef(ref) == -1)
       refKeys.push(ref);
 
     refs[ref] = hash;
   }
 
-  function deleteRef(string ref) {
+  function deleteRef(string ref) maintainerOnly {
     int pos = __findRef(ref);
     if (pos != -1) {
       // FIXME: shrink the array?
@@ -106,7 +111,7 @@ contract MangoRepo {
     return snapshots[index];
   }
 
-  function addSnapshot(string hash) {
+  function addSnapshot(string hash) maintainerOnly {
     snapshots.push(hash);
   }
 
@@ -128,13 +133,13 @@ contract MangoRepo {
     issues.push(Issue(issues.length - 1, msg.sender, hash));
   }
 
-  function setIssue(uint id, string hash) creatorOnly(id) {
+  function setIssue(uint id, string hash) issuePermissions(id) {
     if (id >= issues.length || id < 0) throw;
 
     issues[id].hash = hash;
   }
 
-  function deleteIssue(uint id) creatorOnly(id) {
+  function deleteIssue(uint id) issuePermissions(id) {
     if (id >= issues.length || id < 0) throw;
     if (bytes(issues[id].hash).length == 0) throw;
 
@@ -161,7 +166,7 @@ contract MangoRepo {
     pullRequests.push(PullRequest(pullRequests.length - 1, issues[issueId], msg.sender, fork));
   }
 
-  function closePullRequest(uint id) creatorOnly(id) {
+  function closePullRequest(uint id) pullRequestPermissions(id) {
     if (id >= pullRequests.length || id < 0) throw;
     if (pullRequests[id].fork == address(0)) throw;
 

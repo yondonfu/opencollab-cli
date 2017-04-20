@@ -48,6 +48,10 @@ const args = yargs
       .command('get-pull-request <id>', 'Get a pull request referencing a fork')
       .command('open-pull-request <issueId> <forkAddress>', 'Open a pull request referencing a fork')
       .command('close-pull-request <id>', 'Close a pull request referencing a fork')
+      .command('maintainers', 'List maintainers for a Mango repository')
+      .command('add-maintainer <address>', 'Add a maintainer to a Mango repository')
+      .command('remove-maintainer <address>', 'Remove a maintainer from a Mango repository')
+      .command('set-obsolete', 'Set a Mango repository as obsolete')
       .string('_')
       .help()
       .usage('Usage: $0 [command]');
@@ -351,6 +355,48 @@ function mangoClosePullRequest(mangoAddress, account) {
     .then(id => console.log('[closed] Pull Request #' + id));
 }
 
+function mangoMaintainers(mangoAddress, account) {
+  const { host, port } = argv;
+
+  const mangoRepoLib = initLib(host, port, mangoAddress, account);
+
+  return mangoRepoLib.maintainers()
+    .then(maintainers => {
+      maintainers.map(maintainer => {
+        if (maintainer != '0x0000000000000000000000000000000000000000') {
+          console.log(maintainer);
+        }
+      });
+    });
+}
+
+function mangoAddMaintainer(mangoAddress, account) {
+  const { host, port, address } = argv;
+
+  const mangoRepoLib = initLib(host, port, mangoAddress, account);
+
+  return mangoRepoLib.addMaintainer(address)
+    .then(address => console.log('[added] Maintainer ' + address));
+}
+
+function mangoRemoveMaintainer(mangoAddress, account) {
+  const { host, port, address } = argv;
+
+  const mangoRepoLib = initLib(host, port, mangoAddress, account);
+
+  return mangoRepoLib.removeMaintainer(address)
+    .then(address => console.log('[removed] Maintainer ' + address));
+}
+
+function mangoSetObsolete(mangoAddress, account) {
+  const { host, port } = argv;
+
+  const mangoRepoLib = initLib(host, port, mangoAddress, account);
+
+  return mangoRepoLib.setObsolete()
+    .then(address => console.log('[obsolete] Mango repository ' + address));
+}
+
 // CLI
 
 const { argv } = args;
@@ -465,6 +511,36 @@ switch (command) {
       .catch(err => console.error(err));
 
     break;
+
+  case 'maintainers':
+    ensureMangoRepo()
+      .then(() => Promise.all([getMangoAddress(), getAccount()]))
+      .then(values => mangoMaintainers(values[0], values[1]))
+      .catch(err => console.error(err))
+
+    break;
+
+  case 'add-maintainer':
+    ensureMangoRepo()
+      .then(() => Promise.all([getMangoAddress(), getAccount()]))
+      .then(values => mangoAddMaintainer(values[0], values[1]))
+      .catch(err => console.error(err));
+
+    break;
+
+  case 'remove-maintainer':
+    ensureMangoRepo()
+      .then(() => Promise.all([getMangoAddress(), getAccount()]))
+      .then(values => mangoRemoveMaintainer(values[0], values[1]))
+      .catch(err => console.error(err));
+
+    break;
+
+  case 'set-obsolete':
+    ensureMangoRepo()
+      .then(() => Promise.all([getMangoAddress(), getAccount()]))
+      .then(values => mangoSetObsolete(values[0], values[1]))
+      .catch(err => console.error(err));
 
   default:
     break;

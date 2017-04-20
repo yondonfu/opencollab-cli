@@ -17,6 +17,9 @@
 pragma solidity ^0.4.6;
 
 contract MangoRepo {
+  bool public obsolete;
+
+  address[] maintainerAddresses;
   mapping (address => bool) maintainers;
 
   string[] refKeys;
@@ -57,6 +60,8 @@ contract MangoRepo {
 
   function MangoRepo() {
     maintainers[msg.sender] = true;
+    maintainerAddresses.push(msg.sender);
+    obsolete = false;
   }
 
   function refCount() constant returns (uint) {
@@ -171,5 +176,45 @@ contract MangoRepo {
     if (pullRequests[id].fork == address(0)) throw;
 
     delete pullRequests[id];
+  }
+
+  function setObsolete() maintainerOnly {
+    obsolete = true;
+  }
+
+  function maintainerCount() constant returns (uint) {
+    return maintainerAddresses.length;
+  }
+
+  function __findMaintainer(address addr) private returns (int) {
+    for (var i = 0; i < maintainerAddresses.length; i++) {
+      if (maintainerAddresses[i] == addr)
+        return i;
+    }
+
+    return -1;
+  }
+
+  function getMaintainer(uint idx) constant returns (address) {
+    return maintainerAddresses[idx];
+  }
+
+  function addMaintainer(address addr) maintainerOnly {
+    if (maintainers[addr]) throw;
+
+    maintainers[addr] = true;
+    maintainerAddresses.push(addr);
+  }
+
+  function removeMaintainer(address addr) maintainerOnly {
+    if (!maintainers[addr]) throw;
+
+    maintainers[addr] = false;
+
+    int pos = __findMaintainer(addr);
+
+    if (pos != -1) {
+      maintainerAddresses[uint(pos)] = address(0);
+    }
   }
 }
